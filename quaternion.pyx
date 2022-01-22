@@ -20,19 +20,34 @@ cdef class PyQuaternion:
     @property 
     def w(self):
         return self._thisptr.w
-    
+
+    @w.setter
+    def w(self, val):
+        self._thisptr.w = val
 
     @property
     def x(self):
         return self._thisptr.x
 
+    @x.setter
+    def x(self,val):
+        self._thisptr.x = val
+
     @property
     def y(self):
         return self._thisptr.y
 
+    @y.setter
+    def y(self,val):
+        self._thisptr.y = val
+
     @property
     def z(self):
         return self._thisptr.z
+
+    @z.setter
+    def z(self,val):
+        self._thisptr.z = val
 
 
 
