@@ -5,6 +5,10 @@ cdef extern from "quaternion.h" :
     cdef cppclass Quaternion:
         float w,x,y,z
         Quaternion(float, float, float, float)
+        float dot(const Quaternion* q)
+        int identity(const Quaternion* q)
+        PyQuaternion conjugate(const Quaternion* pOut,const Quaternion* pIn)
+       
 
 cdef class PyQuaternion:
     cdef Quaternion*_thisptr
@@ -49,23 +53,13 @@ cdef class PyQuaternion:
     def z(self,val):
         self._thisptr.z = val
 
+    def dot(self, PyQuaternion q): 
+        return self._thisptr.dot(q._thisptr)  
 
+    def identity(self):
+        return self._thisptr.identity(self._thisptr)
+    
+    def conjugate(self):
+        return self._thisptr.conjugate(self._thisptr, self._thisptr)
+    
 
-""""cdef class RNG:
-
-    cdef MT_RNG *_thisptr
-
-    def __cinit__(self, unsigned long s):
-        self._thisptr = new MT_RNG(s)
-        if self._thisptr == NULL:
-            raise MemoryError()
-
-    def __dealloc__(self):
-        if self._thisptr != NULL:
-            del self._thisptr
-
-    cpdef unsigned long randint(self):
-        return self._thisptr.genrand_int32()
-
-    cpdef double rand(self):
-        return self._thisptr.genrand_real1()"""
