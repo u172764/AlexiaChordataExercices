@@ -7,7 +7,7 @@ cdef extern from "quaternion.h" :
         Quaternion(float, float, float, float)
         float dot(const Quaternion* q)
         int identity(const Quaternion* q)
-        PyQuaternion conjugate(const Quaternion* pOut,const Quaternion* pIn)
+        Quaternion*  const conjugate(const Quaternion* pOut,const Quaternion* pIn)
        
 
 cdef class PyQuaternion:
@@ -59,7 +59,16 @@ cdef class PyQuaternion:
     def identity(self):
         return self._thisptr.identity(self._thisptr)
     
-    def conjugate(self):
-        return self._thisptr.conjugate(self._thisptr, self._thisptr)
     
+    cpdef conjugate(self):
+        cdef Quaternion * c_conj = new Quaternion(0,0,0,0)
+        self._thisptr.conjugate(c_conj,self._thisptr)
+
+        cdef PyQuaternion py_quat = PyQuaternion(0,0,0,0)
+        cdef Quaternion* _old_ptr = py_quat._thisptr
+        del _old_ptr
+
+        py_quat._thisptr = c_conj
+
+        return py_quat
 
