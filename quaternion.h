@@ -6,6 +6,7 @@ struct Quaternion;
 float dot(const Quaternion* q);
 int identity(const Quaternion* q);
 Quaternion* const conjugate(Quaternion* pOut, const Quaternion* pIn);
+void conjugate2(Quaternion* const q);
 
 struct Quaternion {
   Quaternion(float _w, float _x, float _y, float _z):
@@ -32,6 +33,13 @@ struct Quaternion {
     pOut->w = pIn->w;
 
     return pOut;
+  }
+
+  void conjugate2(Quaternion* const q){
+    this->x = -q->x;
+    this->y = -q->y;
+    this->z = -q->z;
+    this->w = q->w
   }
 
   float w,x,y,z;
