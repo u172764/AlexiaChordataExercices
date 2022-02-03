@@ -40,8 +40,23 @@ struct Quaternion {
     this->y = -q->y;
     this->z = -q->z;
     this->w = q->w
+
+  
   }
 
+"""
+  Quaternion* const conjugate(Quaternion* q){
+
+    Quaternion* q_conj = new Quaternion(0,0,0,0);
+
+    q_conj->x = -q->x; //o pasar en vez de q, -this->x, -this->y, -this->z, this->w. 
+    q_conj->y = -q->y;
+    q_conj->z = -q->z;
+    q_conj->w = q->w;
+
+    return q_conj;
+  }
+"""
   float w,x,y,z;
 
 };
